@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+    <record id="cancel_license_wizard_view" model="ir.ui.view">
+        <field name="name">cancel.license.wizard.view</field>
+        <field name="model">cancel.license.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Cancel">
+                <sheet>
+                    <group>
+                        <field name="license_id" invisible="1"/>
+                        <field name="application_id" invisible="1"/>
+                        <field name="cancel_reason_id" required="context.get('for_license',False)" attrs="{'invisible':[('license_id','=',False)]}"/>
+                        <field name="application_reason_id" required="context.get('for_application',False)"
+                               attrs="{'invisible':[('application_id','=',False)]}"/>
+                    </group>
+                </sheet>
+                <footer>
+                    <button name="cancel_license" type="object" string="Submit" attrs="{'invisible':[('license_id','=',False)]}"/>
+                    <button name="cancel_application" type="object" string="Submit" attrs="{'invisible':[('application_id','=',False)]}"/>
+                    <button string="Cancel" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+    </data>
+</odoo>

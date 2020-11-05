@@ -1,0 +1,59 @@
+<odoo>
+    <data>
+        <template id="portal_my_home" name="Portal My Home: project entries" inherit_id="portal.portal_my_home" priority="70">
+            <xpath expr="//div[hasclass('o_portal_docs')]" position="inside">
+                <t t-if="shared_link_count" t-call="portal.portal_docs_entry">
+                    <t t-set="title">Shared Links</t>
+                    <t t-set="url" t-value="'/my/links'"/>
+                    <t t-set="count" t-value="shared_link_count"/>
+                </t>
+            </xpath>
+        </template>
+
+        <template id="portal_layout" name="Portal layout: Shared link list" inherit_id="portal.portal_breadcrumbs" priority="35">
+            <xpath expr="//ol[hasclass('o_portal_submenu')]" position="inside">
+                <li t-if="page_name == 'shared_links'" t-attf-class="breadcrumb-item #{'active' if not shared_links else ''}">
+                    <t>Shared Links</t>
+                </li>
+            </xpath>
+        </template>
+
+        <template id="layout_portal_shared_links" name="My Shared Links">
+            <t t-call="portal.portal_layout">
+                <t t-set="breadcrumbs_searchbar" t-value="True"/>
+
+                <t t-call="portal.portal_searchbar">
+                    <t t-set="title">Shared Links</t>
+                </t>
+                <t t-if="not shared_links">
+                    <div class="alert alert-warning mt8" role="alert">
+                        There are no shared links.
+                    </div>
+                </t>
+                <t t-if="shared_links" t-call="portal.portal_table">
+                    <thead class="thead-light">
+                        <tr>
+                            <th>Link</th>
+                            <th>Folder</th>
+                            <th>URL</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr t-foreach="shared_links" t-as="link">
+                            <td>
+                                <span t-field="link.name"/>
+                            </td>
+                            <td>
+                                <span t-field="link.folder_id"/>
+                            </td>
+                            <td>
+                                <a role="button" class="btn btn-success" target="_blank" t-attf-href="{{link.full_url}}">View</a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </t>
+            </t>
+        </template>
+
+    </data>
+</odoo>

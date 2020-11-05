@@ -1,0 +1,404 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="application_tree_view" model="ir.ui.view">
+            <field name="name">application tree</field>
+            <field name="model">license.application</field>
+            <field name="arch" type="xml">
+                <tree default_order="id asc">
+                    <field name="name"/>
+                </tree>
+            </field>
+        </record>
+        <record id="license_application_kanban_view" model="ir.ui.view">
+            <field name="name">license.application.kanban.view</field>
+            <field name="model">license.application</field>
+            <field name="arch" type="xml">
+                <kanban default_group_by="stage_id" class="o_kanban_small_column o_opportunity_kanban"
+                        on_create="quick_create" default_order="id asc">
+                    <field name="name"/>
+                    <field name="stage_id"/>
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div t-attf-class="oe_kanban_card oe_kanban_global_click">
+                                <div class="oe_kanban_content">
+                                    <div class="o_kanban_record_top">
+                                        <div class="o_kanban_record_headings">
+                                            <strong class="o_kanban_record_title">
+                                                <field name="name"/>
+                                            </strong>
+                                        </div>
+                                        <div class="o_dropdown_kanban dropdown" name="kanban_dropdown">
+                                            <a class="dropdown-toggle o-no-caret btn" data-toggle="dropdown" href="#"
+                                               aria-label="Dropdown menu" title="Dropdown menu" role="button">
+                                                <span class="fa fa-bars fa-lg"/>
+                                            </a>
+                                            <div class="dropdown-menu" role="menu" name="dropdown">
+                                                <t t-if="widget.editable">
+                                                    <a type="edit" class="dropdown-item">Edit</a>
+                                                </t>
+                                                <t t-if="widget.deletable">
+                                                    <a type="delete" class="dropdown-item">Delete</a>
+                                                </t>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+
+        <record id="application_form_view" model="ir.ui.view">
+            <field name="name">application form</field>
+            <field name="model">license.application</field>
+            <field name="arch" type="xml">
+                <form>
+                    <header>
+                        <button name="cancel_application" type="object" string="Cancel Application" highlight="1" attrs="{'invisible':[('stage_id','=',7)]}"/>
+                        <field name="stage_id" widget="statusbar" options="{'clickable': '1','fold_field':'folded_in_kanban'}"/>
+                    </header>
+                    <sheet string="Application">
+                        <div class="oe_title">
+                                    <h1>
+                                        <field name="name"/>
+                                    </h1>
+                        </div>
+                        <field name="cancel_reason" attrs="{'invisible':[('stage_id','!=',7)]}"/>
+                        <group name="studio_group_8b2ec0">
+                          <group name="studio_group_8b2ec0_left"/>
+                          <group name="studio_group_8b2ec0_right"><field name="partner_id"/></group>
+                        </group>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers" groups="base.group_user"/>
+                        <field name="activity_ids" widget="mail_activity"/>
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <record id="license_tree_view" model="ir.ui.view">
+            <field name="name">license tree</field>
+            <field name="model">license.license</field>
+            <field name="arch" type="xml">
+                <tree default_order="id asc">
+                    <field name="name"/>
+                    <field name="stage_id"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="license_license_kanban_view" model="ir.ui.view">
+            <field name="name">license.license.kanban.view</field>
+            <field name="model">license.license</field>
+            <field name="arch" type="xml">
+                <kanban default_group_by="stage_id" class="o_kanban_small_column o_opportunity_kanban"
+                        on_create="quick_create" default_order="id asc">
+                    <field name="name"/>
+                    <field name="stage_id"/>
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div t-attf-class="oe_kanban_card oe_kanban_global_click">
+                                <div class="oe_kanban_content">
+                                    <div class="o_kanban_record_top">
+                                        <div class="o_kanban_record_headings">
+                                            <strong class="o_kanban_record_title">
+                                                <field name="name"/>
+                                            </strong>
+                                        </div>
+                                        <div class="o_dropdown_kanban dropdown" name="kanban_dropdown">
+                                            <a class="dropdown-toggle o-no-caret btn" data-toggle="dropdown" href="#"
+                                               aria-label="Dropdown menu" title="Dropdown menu" role="button">
+                                                <span class="fa fa-bars fa-lg"/>
+                                            </a>
+                                            <div class="dropdown-menu" role="menu" name="dropdown">
+                                                <t t-if="widget.editable">
+                                                    <a type="edit" class="dropdown-item">Edit</a>
+                                                </t>
+                                                <t t-if="widget.deletable">
+                                                    <a type="delete" class="dropdown-item">Delete</a>
+                                                </t>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+
+        <record id="license_form_view" model="ir.ui.view">
+            <field name="name">license form</field>
+            <field name="model">license.license</field>
+            <field name="arch" type="xml">
+                <form>
+                    <header>
+                        <button name="cancel_license" type="object" string="Cancel License" highlight="1" attrs="{'invisible':[('stage_id','=',5)]}"/>
+                        <field name="stage_id" widget="statusbar" options="{'clickable': '1','fold_field':'folded_in_kanban'}"/>
+                    </header>
+                    <sheet string="License">
+                        <div class="oe_title">
+                                    <h1>
+                                        <field name="name"/>
+                                    </h1>
+                        </div>
+                        <field name="cancel_reason" attrs="{'invisible':[('stage_id','=',7)]}"/>
+                        <group name="studio_group_2a05a4">
+                          <group name="studio_group_2a05a4_left"/>
+                          <group name="studio_group_2a05a4_right"><field name="partner_id"/></group>
+                        </group>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers" groups="base.group_user"/>
+                        <field name="activity_ids" widget="mail_activity"/>
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <record id="site_tree_view" model="ir.ui.view">
+            <field name="name">site tree</field>
+            <field name="model">license.site</field>
+            <field name="arch" type="xml">
+                <tree default_order="id asc">
+                    <field name="name"/>
+                </tree>
+            </field>
+        </record>
+        <record id="site_form_view" model="ir.ui.view">
+            <field name="name">site form</field>
+            <field name="model">license.site</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet string="Sites">
+                        <div class="oe_title">
+                                    <h1>
+                                        <field name="name" required="1"/>
+                                    </h1>
+                        </div>
+                        <group name="studio_group_e128f1">
+                          <group name="studio_group_e128f1_left"/>
+                          <group name="studio_group_e128f1_right"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+
+        <record id="application_stages_tree" model="ir.ui.view">
+            <field name="name">application.stage.tree</field>
+            <field name="model">license.application.stage</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="sequence" widget="handle" optional="show"/>
+                    <field name="name"/>
+                    <field name="folded_in_kanban" string="Folded in Kanban"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="application_stages_form" model="ir.ui.view">
+            <field name="name">application.stage.form</field>
+            <field name="model">license.application.stage</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="name" required="1"/>
+                                <field name="folded_in_kanban" string="Folded in Kanban"/>
+                            </group>
+                            <group>
+                                <field name="sequence" string="Sequence" widget="integer" placeholder="Number"
+                                       attrs="{}" force_save="True" help="Used to order stages. Lower is better."/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="license_stages_tree" model="ir.ui.view">
+            <field name="name">license.stage.tree</field>
+            <field name="model">license.stage</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="sequence" widget="handle" optional="show"/>
+                    <field name="name"/>
+                    <field name="folded_in_kanban" string="Folded in Kanban"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="license_stages_form" model="ir.ui.view">
+            <field name="name">license.stage.form</field>
+            <field name="model">license.stage</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="name" required="1"/>
+                                <field name="folded_in_kanban" string="Folded in Kanban"/>
+                            </group>
+                            <group>
+                                <field name="sequence" string="Sequence" widget="integer" placeholder="Number"
+                                       attrs="{}" force_save="True" help="Used to order stages. Lower is better."/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="license_type_tree_view" model="ir.ui.view">
+            <field name="name">license type tree</field>
+            <field name="model">license.type</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name"/>
+                </tree>
+            </field>
+        </record>
+        <record id="license_type_form_view" model="ir.ui.view">
+            <field name="name">license type form</field>
+            <field name="model">license.type</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet string="License Type">
+                        <div class="oe_title">
+                                    <h1>
+                                        <field name="name" required="1"/>
+                                    </h1>
+                        </div>
+                        <group name="studio_group_5b4db0">
+                          <group name="studio_group_5b4db0_left"/>
+                          <group name="studio_group_5b4db0_right"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="species_group_tree_view" model="ir.ui.view">
+            <field name="name">species group tree</field>
+            <field name="model">license.species.group</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name"/>
+                </tree>
+            </field>
+        </record>
+        <record id="species_group_form_view" model="ir.ui.view">
+            <field name="name">species group form</field>
+            <field name="model">license.species.group</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet string="Species Groups">
+                        <div class="oe_title">
+                                    <h1>
+                                        <field name="name" required="1"/>
+                                    </h1>
+                        </div>
+                        <group name="studio_group_184136">
+                          <group name="studio_group_184136_left"/>
+                          <group name="studio_group_184136_right"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_x_license" model="ir.actions.act_window">
+            <field name="name">Licence</field>
+            <field name="res_model">license.license</field>
+            <field name="view_mode">kanban,tree,form</field>
+        </record>
+
+        <record id="action_x_site" model="ir.actions.act_window">
+            <field name="name">Sites</field>
+            <field name="res_model">license.site</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <record id="action_x_application" model="ir.actions.act_window">
+            <field name="name">Application</field>
+            <field name="res_model">license.application</field>
+            <field name="view_mode">kanban,tree,form</field>
+        </record>
+
+        <record id="action_x_application_stages" model="ir.actions.act_window">
+            <field name="name">Application stages</field>
+            <field name="res_model">license.application.stage</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <record id="action_x_license_stages" model="ir.actions.act_window">
+            <field name="name">License Stages</field>
+            <field name="res_model">license.stage</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <record id="action_x_license_types" model="ir.actions.act_window">
+            <field name="name">License Types</field>
+            <field name="res_model">license.type</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <record id="action_x_species_groups" model="ir.actions.act_window">
+            <field name="name">Species Groups</field>
+            <field name="res_model">license.species.group</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem id="menu_sfa_licence_root" name="Licences"/>
+        <menuitem id="menu_license"
+                  name="Licence"
+                  web_icon="sfa_licence,static/description/icon.png"
+                  action="sfa_licence.action_x_license"
+                  sequence="1"
+                  parent="sfa_licence.menu_sfa_licence_root"/>
+
+        <menuitem id="menu_site"
+                  name="Sites"
+                  sequence="3"
+                  action="sfa_licence.action_x_site"
+                  parent="sfa_licence.menu_sfa_licence_root"/>
+
+        <menuitem id="menu_application"
+                  name="Application"
+                  sequence="2"
+                  action="sfa_licence.action_x_application"
+                  parent="sfa_licence.menu_sfa_licence_root"/>
+
+        <menuitem id="menu_configuration"
+                  name="Configuration"
+                  sequence="4"
+                  groups="base.group_system"
+                  parent="sfa_licence.menu_sfa_licence_root"/>
+        <menuitem id="menu_license_stages"
+                  name="License Stages"
+                  action="sfa_licence.action_x_license_stages"
+                  parent="sfa_licence.menu_configuration"/>
+        <menuitem id="menu_application_stages"
+                  name="Application Stages"
+                  action="sfa_licence.action_x_application_stages"
+                  parent="sfa_licence.menu_configuration"/>
+        <menuitem id="menu_license_types"
+                  name="License Types"
+                  action="sfa_licence.action_x_license_types"
+                  parent="sfa_licence.menu_configuration"/>
+        <menuitem id="menu_species_group"
+                  name="Species Groups"
+                  action="sfa_licence.action_x_species_groups"
+                  parent="sfa_licence.menu_configuration"/>
+    </data>
+</odoo>
